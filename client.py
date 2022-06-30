@@ -10,10 +10,10 @@ win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("TicTacToe")
 pygame.font.init()
 
-picture_x = pygame.image.load("X.jpg")
+picture_x = pygame.image.load("X1.jpg")
 picture_x = pygame.transform.scale(picture_x, (CELL_SIZE, CELL_SIZE))
 
-picture_o = pygame.image.load("O.jpg")
+picture_o = pygame.image.load("O1.jpg")
 picture_o = pygame.transform.scale(picture_o, (CELL_SIZE, CELL_SIZE))
 
 
@@ -66,8 +66,17 @@ def main():
     run = True
     clock = pygame.time.Clock()
     network = Network()
-    player = int(network.get_player_id())
-    print("You are player: ", player)
+    try:
+        player = int(network.get_player_id())
+        print("You are player: ", player)
+    except:
+        win.fill((255, 255, 255))
+        font = pygame.font.SysFont("arial", 40)
+        text = font.render("Server not online.", True, (255, 0, 0))
+        win.blit(text, (WIDTH / 2 - text.get_width() / 2, HEIGHT / 2 - text.get_height() / 2))
+        pygame.display.update()
+        pygame.time.delay(500)
+        run = False
 
     while run:
         clock.tick(60)
